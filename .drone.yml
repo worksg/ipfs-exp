@@ -1,0 +1,22 @@
+kind: pipeline
+name: linux-amd64
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+# https://github.com/drone-plugins/drone-docker/blob/master/cmd/drone-docker/main.go
+- name: build-ipfs-image 
+  image: plugins/docker
+  settings:
+    username: 
+      from_secret: docker_username
+    password: 
+      from_secret: docker_password
+    repo: worksg/exp-go-ipfs
+    tags: private-network
+    dockerfile: ./Dockerfile
+    build_args:
+      - IPFS_VERSION=v0.4.23
+#    dry_run: "true"
